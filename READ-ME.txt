@@ -1,9 +1,7 @@
-  =>  Template Name    : Stocker - Stock Market Website Template
-
-  =>  Template Link    : https://htmlcodex.com/stock-market-website-template
+  =>  Name    : Stocker - Stock Market Website Template
 
   =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
 
-  =>  Template Author  : HTML Codex
+  =>  Template Author  : Ravel Tech
 
-  =>  Author Website   : https://htmlcodex.com
+  =>  Author Website   : ravelconsultancy.com
