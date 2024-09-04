@@ -101,6 +101,62 @@ if ($role == 1) {
 
 // Determine the active tab
 $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profile tab
+
+
+// Fetch total hours worked for the current month
+$currentMonthStart = date('Y-m-01');
+$currentMonthEnd = date('Y-m-t');
+
+$stmt = $conn->prepare("SELECT SUM(hours_worked) as total_hours FROM timesheets WHERE email = ? AND date BETWEEN ? AND ?");
+$stmt->bind_param("sss", $userEmail, $currentMonthStart, $currentMonthEnd);
+$stmt->execute();
+$result = $stmt->get_result();
+$totalHours = $result->fetch_assoc()['total_hours'] ?? 0;
+
+// Fetch timesheet data with pagination and date filter
+$limit = 5; // Number of entries per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Set date filter range
+$startDate = isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m-01');
+$endDate = isset($_GET['end_date']) ? $_GET['end_date'] : date('Y-m-d');
+
+// Fetch filtered timesheet records
+$stmt = $conn->prepare("SELECT * FROM timesheets WHERE email = ? AND date BETWEEN ? AND ? ORDER BY date DESC LIMIT ? OFFSET ?");
+$stmt->bind_param("sssii", $userEmail, $startDate, $endDate, $limit, $offset);
+$stmt->execute();
+$timesheetResult = $stmt->get_result();
+
+// Fetch the total number of records for pagination
+$stmt = $conn->prepare("SELECT COUNT(*) as total FROM timesheets WHERE email = ? AND date BETWEEN ? AND ?");
+$stmt->bind_param("sss", $userEmail, $startDate, $endDate);
+$stmt->execute();
+$countResult = $stmt->get_result();
+$totalRecords = $countResult->fetch_assoc()['total'];
+$totalPages = ceil($totalRecords / $limit);
+
+// Handle timesheet download
+if (isset($_POST['download_timesheet'])) {
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment;filename="timesheet.csv"');
+
+    $output = fopen("php://output", "w");
+    fputcsv($output, ['Date', 'Hours Worked', 'Description']);
+
+    $downloadStmt = $conn->prepare("SELECT date, hours_worked, description FROM timesheets WHERE email = ? AND date BETWEEN ? AND ?");
+    $downloadStmt->bind_param("sss", $userEmail, $startDate, $endDate);
+    $downloadStmt->execute();
+    $downloadResult = $downloadStmt->get_result();
+
+    while ($row = $downloadResult->fetch_assoc()) {
+        fputcsv($output, $row);
+    }
+
+    fclose($output);
+    exit;
+}
+
 ?>
 
 <style>
@@ -250,7 +306,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profi
         <div class="sidebar">
             <h5>Dashboard</h5>
             <a href="?tab=profile" class="<?php echo $activeTab == 'profile' ? 'active' : ''; ?>"><i class="fas fa-user-circle"></i> Profile Details</a>
-            <?php if ($role == 1) { ?>
+            <?php if ($role == 1) { // Show this option only for Administrators ?>
                 <a href="?tab=manage_requests" class="<?php echo $activeTab == 'manage_requests' ? 'active' : ''; ?>"><i class="fas fa-user-check"></i> Manage Requests</a>
             <?php } ?>
 
@@ -258,7 +314,14 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profi
             <a href="rvapp.php">
                 <i class="fas fa-cogs"></i> My Apps
             </a>
-            <a href="?tab=change_password" class="<?php echo $activeTab == 'change_password' ? 'active' : ''; ?>"><i class="fas fa-key"></i> Change Password</a>            
+            <a href="?tab=change_password" class="<?php echo $activeTab == 'change_password' ? 'active' : ''; ?>"><i class="fas fa-key"></i> Change Password</a>
+
+            <?php if ($role == 2): // Show this option only for contributors ?>
+                <a href="?tab=timesheet" class="<?php echo $activeTab == 'timesheet' ? 'active' : ''; ?>">
+                    <i class="fas fa-clock"></i> Timesheet
+                </a>
+
+            <?php endif; ?>            
             
             <a href="logout.php">
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -312,7 +375,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profi
                     <button type="submit" name="change_password" class="btn btn-primary">Change Password</button>
                 </form>
 
-                <?php elseif ($activeTab == 'manage_requests' && $role == 1): ?>
+                <?php elseif ($activeTab == 'manage_requests' && $role == 2): ?>
                 <h4>Manage Member Requests</h4>
 
                 <?php if (isset($message)): ?>
@@ -376,6 +439,101 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profi
                         <?php endif; ?>
                     </tbody>
                 </table>
+
+                <?php elseif ($activeTab == 'timesheet' && $role == 1): ?>
+                        <!-- Timesheet Section for Contributors -->
+                        
+                        <h4>Timesheet</h4>
+
+                        <!-- Display Total Hours Worked This Month -->
+                        <p><strong>Total Hours Worked (<?php echo date('F Y'); ?>):</strong> <?php echo htmlspecialchars(number_format($totalHours, 2)); ?> hours</p>
+
+                        <!-- Date Filter Form -->
+                        <form method="get" class="d-flex mb-3">
+                            <input type="hidden" name="tab" value="timesheet">
+                            <input type="date" name="start_date" class="form-control me-2" value="<?php echo htmlspecialchars($startDate); ?>">
+                            <input type="date" name="end_date" class="form-control me-2" value="<?php echo htmlspecialchars($endDate); ?>">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
+
+                        <!-- Download Timesheet Button -->
+                        <form method="post" class="mb-3">
+                            <button type="submit" name="download_timesheet" class="btn btn-secondary">Download Timesheet</button>
+                        </form>
+
+                        <!-- Display Timesheet Entries -->
+                        <table class="table table-bordered mt-4">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Hours Worked</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($timesheet = $timesheetResult->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($timesheet['date']); ?></td>
+                                        <td><?php echo htmlspecialchars($timesheet['hours_worked']); ?></td>
+                                        <td><?php echo htmlspecialchars($timesheet['description']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                                <?php if ($timesheetResult->num_rows == 0): ?>
+                                    <tr>
+                                        <td colspan="3" class="text-center">No records found for the selected date range.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination -->
+                        <nav>
+                            <ul class="pagination">
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                        <a class="page-link" href="?tab=timesheet&start_date=<?php echo htmlspecialchars($startDate); ?>&end_date=<?php echo htmlspecialchars($endDate); ?>&page=<?php echo $i; ?>">
+                                            <?php echo $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?>
+                            </ul>
+                        </nav>
+
+                        <!-- Add New Timesheet Entry Form -->
+                        <form method="post" class="mt-4">
+                            <div class="mb-3">
+                                <label for="date" class="form-label required">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="hours_worked" class="form-label required">Hours Worked</label>
+                                <input type="number" class="form-control" id="hours_worked" name="hours_worked" min="1" step="0.5" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" name="add_timesheet" class="btn btn-primary">Add Entry</button>
+                        </form>
+
+                        <?php
+                        // Handle new timesheet entry
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_timesheet'])) {
+                            $date = $_POST['date'];
+                            $hoursWorked = $_POST['hours_worked'];
+                            $description = $_POST['description'];
+
+                            // Insert new timesheet entry into the database
+                            $stmt = $conn->prepare("INSERT INTO timesheets (email, date, hours_worked, description) VALUES (?, ?, ?, ?)");
+                            $stmt->bind_param("ssds", $userEmail, $date, $hoursWorked, $description);
+
+                            if ($stmt->execute()) {
+                                echo '<div class="alert alert-success mt-3">Timesheet entry added successfully.</div>';
+                            } else {
+                                echo '<div class="alert alert-danger mt-3">Failed to add entry. Please try again.</div>';
+                            }
+                        }
+                        ?>
             <?php endif; ?>
         </div>
     </div>
