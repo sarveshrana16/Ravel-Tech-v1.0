@@ -113,7 +113,7 @@ input.form-control:focus {
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                     <div class="text-center mt-3">
-                        <a href="forgot_password.php" class="text-decoration-none">Forgot your password?</a>
+                        <a href="forgotpassword.php" class="text-decoration-none">Forgot your password?</a>
                     </div>
                     <div class="text-center mt-3">
                         <p>Not registered yet? <a href="rvregister.php" class="text-decoration-none">Submit your request here</a>.</p>
