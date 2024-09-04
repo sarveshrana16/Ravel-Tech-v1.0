@@ -61,6 +61,7 @@ if($role==1){
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     $requestId = $_POST['request_id'];
     $action = $_POST['action'];
+    $recemail = $_POST['email'];
 
     if ($action == 'approve') {
         $stmt = $conn->prepare("UPDATE registrations SET isapproved = 1 WHERE id = ?");
@@ -70,6 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         } else {
             $message = "Failed to approve the request. Please try again.";
         }
+        include 'rvsendmail.php';
+
+        // Sending Email on approval or rejection.
+        $receiverEmail = $recemail;
+        $subject = 'Member Registration Status';
+        $content = $message;
+        $result = sendEmail($receiverEmail, $subject, $content);
+        echo $result;
     } elseif ($action == 'reject') {
         $stmt = $conn->prepare("DELETE FROM registrations WHERE id = ?");
         $stmt->bind_param("i", $requestId);
@@ -349,6 +358,8 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'profile'; // Default to profi
                                     <td>
                                         <form method="post" style="display:inline;">
                                             <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
+                                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($request['email']); ?>">
+                                            <input type="hidden" name="username" value="<?php echo htmlspecialchars($request['username']); ?>">
                                             <button type="submit" name="action" value="approve" class="btn btn-approve btn-sm"><i class="fas fa-check"></i> Approve</button>
                                         </form>
                                         <form method="post" style="display:inline;">
