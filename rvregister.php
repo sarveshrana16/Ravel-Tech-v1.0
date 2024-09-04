@@ -77,6 +77,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $result = $conn->query("SELECT @p_status AS status")->fetch_assoc();
         $message = $result['status'];
+
+        include 'rvsendmail.php';
+
+        // Parameters for sending the email
+        $receiverEmail = $email;
+        $subject = 'New Member Registration';
+        $content = $message;
+
+        // Call the sendEmail function
+        $result = sendEmail($receiverEmail, $subject, $content);
+
+        // Display the result of the email sending attempt
+        echo $result;
     }
 }
 ?>
