@@ -19,10 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isApproved = $result['isApproved'];
     $status = $result['status'];
     $username = $result['username'];
+    $message = '';
 
     // Display status message if there is an issue
     if ($status !== 'User found and approved.') {
-        echo "<div class='alert alert-info text-center'>$status</div>";
+        $message = "<div class='alert alert-info text-center'>$status</div>";
     } elseif ($hashed_password && password_verify($password, $hashed_password)) {
 
         // Set session on successful login
@@ -34,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location.href='index.php';</script>";
         exit;
     } else {
-        echo "<div class='alert alert-danger text-center'>Invalid password. Please try again.</div>";
+        $message = "Invalid password. Please try again.";
     }
 }
 ?>
@@ -102,6 +103,9 @@ input.form-control:focus {
         <div class="col-md-6">
             <div class="card shadow-lg p-4 rounded border-0">
                 <h4 class="text-center mb-4">Connect to Your Dashboard</h4>
+                <?php if($message!=''){?>
+                    <div class='alert alert-danger text-center'><?php echo htmlspecialchars($message)?></div>
+                <?php }?>
                 <form method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
