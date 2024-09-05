@@ -61,13 +61,13 @@ session_start(); // Start the session to check login status
                     
                     <a href=""><small class="me-3 text-dark"><i class="fa text-primary me-2"></i>Hi! <?php echo $_SESSION['username'] ?></small></a>
                     <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-dark" data-bs-toggle="dropdown"><small><i class="fa fa-home text-primary me-2"></i> My Dashboard</small></a>
+                        <a href="dashboard/index.php" class="dropdown-toggle text-dark" data-bs-toggle="dropdown"><small><i class="fa fa-home text-primary me-2"></i> My Dashboard</small></a>
                         <div class="dropdown-menu rounded">
+                            <a href="dashboard/index.php" class="dropdown-item"><i class="fas fa-user-alt me-2"></i>Dashboard</a>
                             <a href="profile.php" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> My Profile</a>
-                            <a href="inbox.php" class="dropdown-item"><i class="fas fa-comment-alt me-2"></i> Inbox</a>
                             <a href="notifications.php" class="dropdown-item"><i class="fas fa-bell me-2"></i> Notifications</a>
                             <a href="settings.php" class="dropdown-item"><i class="fas fa-cog me-2"></i> Account Settings</a>
-                            <a href="logout.php" class="dropdown-item"><i class="fas fa-power-off me-2"></i> Log Out</a>
+                            <a href="logout.php" class="dropdown-item"><i class="fas fa-power-off me-2"></i>Log Out</a>
                         </div>
                     </div>
                 <?php endif; ?>
