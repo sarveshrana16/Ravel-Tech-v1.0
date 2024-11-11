@@ -46,8 +46,8 @@ session_start(); // Start the session to check login status
         <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
             <div class="d-flex flex-wrap">
                 <a href="#" class="text-muted small me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Canada</a>
-                <a href="tel:+01234567890" class="text-muted small me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
-                <a href="mailto:example@gmail.com" class="text-muted small me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                <!--<a href="tel:+01234567890" class="text-muted small me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>-->
+                <a href="mailto:raveltech@hotmail.com" class="text-muted small me-0"><i class="fas fa-envelope text-primary me-2"></i>raveltech@hotmail.com</a>
             </div>
         </div>
         <div class="col-lg-4 text-center text-lg-end">
@@ -110,18 +110,19 @@ session_start(); // Start the session to check login status
                         <span class="dropdown-toggle">Products</span>
                     </a>
                     <div class="dropdown-menu m-0">
-                        <a href="feature.php" class="dropdown-item <?php echo ($current_page == 'feature.php') ? 'active' : ''; ?>">Ravel Express Render (RER)</a>
-                        <a href="team.php" class="dropdown-item <?php echo ($current_page == 'team.php') ? 'active' : ''; ?>">Plan Check Pro (FPAR)</a>
-                        <a href="testimonial.php" class="dropdown-item <?php echo ($current_page == 'testimonial.php') ? 'active' : ''; ?>">Auto Spec Pro (MSAS)</a>
-                        <a href="RPP/index.php" class="dropdown-item <?php echo ($current_page == 'testimonial.php') ? 'active' : ''; ?>">Product Polish (RPP)</a>
+                        <a href="https://rvtmodel.azurewebsites.net/" class="dropdown-item <?php echo ($current_page == 'feature.php') ? 'active' : ''; ?>">RVT3D Models</a>
+                        <a href="#" class="dropdown-item <?php echo ($current_page == 'feature.php') ? 'active' : ''; ?>">Ravel Express Render (RER) In Dev</a>
+                        <a href="#" class="dropdown-item <?php echo ($current_page == 'team.php') ? 'active' : ''; ?>">Plan Check Pro (FPAR) In Dev</a>
+                        <a href="#" class="dropdown-item <?php echo ($current_page == 'testimonial.php') ? 'active' : ''; ?>">Auto Spec Pro (MSAS) In Dev</a>
+                        <a href="#" class="dropdown-item <?php echo ($current_page == 'testimonial.php') ? 'active' : ''; ?>">Product Polish (RPP) In Dev</a>
                     </div>
                 </div>
-                <a href="service.php" class="nav-item nav-link <?php echo ($current_page == 'service.php') ? 'active' : ''; ?>">Pricing</a>
+                <!--<a href="service.php" class="nav-item nav-link <?php echo ($current_page == 'service.php') ? 'active' : ''; ?>">Pricing</a>-->
                 <a href="about.php" class="nav-item nav-link <?php echo ($current_page == 'about.php') ? 'active' : ''; ?>">About</a>
-                <a href="blog.php" class="nav-item nav-link <?php echo ($current_page == 'blog.php') ? 'active' : ''; ?>">Innovation Alley</a>
+                <!--<a href="blog.php" class="nav-item nav-link <?php echo ($current_page == 'blog.php') ? 'active' : ''; ?>">Innovation Alley</a>-->
                 <a href="contact.php" class="nav-item nav-link <?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>">Contact Us</a>
             </div>
-            <a href="#" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">Get Started</a>
+            <!--<a href="#" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">Get Started</a>-->
         </div>
     </nav>
 </div>

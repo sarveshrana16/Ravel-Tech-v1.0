@@ -67,7 +67,7 @@
                             </div>
                             <div class="bg-light p-5 rounded h-100 wow fadeInUp" data-wow-delay="0.2s">
                                 <h4 class="text-primary">Send Your Message</h4>
-                                <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a class="text-primary fw-bold" href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
+                                <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a class="text-primary fw-bold" href="#">Download Now</a>.</p>
                                 <form>
                                     <div class="row g-4">
                                         <div class="col-lg-12 col-xl-6">
@@ -117,13 +117,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                    <!--<div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
                         <div class="rounded h-100">
                             <iframe class="rounded h-100 w-100" 
                             style="height: 400px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26278.612722097184!2d-122.3368584!3d49.0504374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5484359fc1f1c6a7%3A0x3516a366ba5d93e5!2sAbbotsford%2C%20BC%2C%20Canada!5e0!3m2!1sen!2sbd!4v1694263203918!5m2!1sen!2sbd" 
                             loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

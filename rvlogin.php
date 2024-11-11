@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Display status message if there is an issue
     if ($status !== 'User found and approved.') {
-        $message = "<div class='alert alert-info text-center'>$status</div>";
+        $message = $status;
     } elseif ($hashed_password && password_verify($password, $hashed_password)) {
 
         // Set session on successful login
@@ -104,7 +104,7 @@ input.form-control:focus {
             <div class="card shadow-lg p-4 rounded border-0">
                 <h4 class="text-center mb-4">Connect to Your Dashboard</h4>
                 <?php if($message!=''){?>
-                    <div class='alert alert-danger text-center'><?php echo htmlspecialchars($message)?></div>
+                    <div class="alert alert-danger text-center"><?php echo htmlspecialchars($message)?></div>
                 <?php }?>
                 <form method="post">
                     <div class="mb-3">

@@ -13,10 +13,10 @@
                             <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome To Ravel Tech</h4>
                             <h1 class="display-4 text-uppercase text-white mb-4">Innovative Web Application and Automated AI Solutions</h1>
                             <p class="mb-5 fs-5">Empowering Digital Growth: Website Development, E-commerce Excellence, and BI Innovation.</p>
-                            <div class="d-flex justify-content-center justify-content-md-end flex-shrink-0 mb-4">
+                            <!--<div class="d-flex justify-content-center justify-content-md-end flex-shrink-0 mb-4">
                                 <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
                                 <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
-                            </div>                           
+                            </div> -->                          
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome To Ravel Tech</h4>
                             <h1 class="display-4 text-uppercase text-white mb-4">Your Trusted Partner for Innovative IT and Automated AI Solutions</h1>
                             <p class="mb-5 fs-5">At Ravel Tech, we specialize in providing comprehensive IT solutions to meet the diverse needs of modern businesses. With expertise in web development, database management, Power BI reporting, and app development, we are committed to delivering high-quality services that drive growth and innovation.</p>
-                            <div class="d-flex justify-content-center flex-shrink-0 mb-4">
+                            <!--<div class="d-flex justify-content-center flex-shrink-0 mb-4">
                                 <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
                                 <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
                             </div>
@@ -45,7 +45,7 @@
                                     <a class="btn btn-md-square btn-light rounded-circle mx-2" href=""><i class="fab fa-instagram"></i></a>
                                     <a class="btn btn-md-square btn-light rounded-circle ms-2" href=""><i class="fab fa-linkedin-in"></i></a>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

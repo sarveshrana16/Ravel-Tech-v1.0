@@ -24,14 +24,15 @@
                     <li><i class="fa fa-check text-primary me-2"></i>Scalable Solutions for Growing Businesses</li>
                 </ul>
             </div>
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+
+            <!--<div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="row g-3">
                     <div class="col-6">
                         <img class="img-fluid rounded" src="img/about-1.jpg" alt="About Us Image 1">
                     </div>
                    
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
